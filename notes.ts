@@ -1,3 +1,6 @@
+// Most of the code cribbed from @krassowski
+// https://stackoverflow.com/questions/71736749/accessing-notebook-cell-metadata-and-html-class-attributes-in-jupyterlab-extensi/71744107?noredirect=1#comment126807644_71744107
+
 import { IDisposable, DisposableDelegate } from '@lumino/disposable';
 
 import {
@@ -49,9 +52,9 @@ export class ButtonExtension
             if (tagList) {
               for (let i = 0; i < tagList.length; i++) {
                 var tag = tagList[i];
-                if tag.startsWith("style-")
+                if (tag.startsWith("style-"))
                     cell.node.classList.add(tag.replace("style-", "tag-"));
-                else if tag.startsWith("directive-")
+                else if (tag.startsWith("directive-"))
                     cell.node.classList.add(tag);
               }
             }
@@ -66,7 +69,7 @@ export class ButtonExtension
         console.log("XX-"+tags2+"-YY");
         if (tags2) {
             console.log('we have tags...')
-            if tags2.includes('dsd-sd') {
+            if (tags2.includes('dsd-sd')) {
                 console.log('new tags hit')
                 cell.node.classList.add('NEWadmonition-titleTEST');
             }
@@ -79,9 +82,9 @@ export class ButtonExtension
             for (const i in taglist) {
                 const tag = taglist[i]
                 console.log("splitted-"+tag)
-                if tag.startsWith("style-")
+                if (tag.startsWith("style-"))
                     cell.node.classList.add(tag.replace("style-", "tag-"));
-                else if tag.startsWith("directive-")
+                else if (tag.startsWith("directive-"))
                     cell.node.classList.add(tag);
             }
  
@@ -109,6 +112,7 @@ export class ButtonExtension
            activeCell.node.classList.toggle('admonition-title');
             activeCell.node.classList.add('admonition-titleTEST');
             // We can track down to specific areas
+            // see accessors https://jupyterlab.readthedocs.io/en/stable/api/classes/cells.cell-1.html
             activeCell.inputArea.node.classList.add('CHILD-titleTEST');
         }
         const tags1 = activeCell.model.metadata.get('someMetaData');
